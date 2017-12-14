@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rent A Car</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form style="padding-top:10%" action="/Kaydol" method="POST">
+        <div class="form-group">
+            <label for="name">Ad</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Ad">
+        </div>
+        <div class="form-group">
+            <label for="surname">Soyad</label>
+            <input type="text" name="surname" class="form-control" id="surname" placeholder="Soyad">
+        </div>    
+        <div class="form-group">
+            <label for="username">Email address</label>
+            <input type="email" name="username" class="form-control" id="username" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+        
+        <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    
+<p>Copyright 2017</p>
+</body>
+</html>

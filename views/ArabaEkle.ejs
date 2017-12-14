@@ -1,0 +1,27 @@
+<%include partials/header%>
+<a class ="btn btn-primary btn-large" href="/">Anasayfa2</a>  
+<div class="container">
+    <div class="row">
+        <h1 style="text-align:center">yeni araba ekle</h1>
+        <div style="width:30%;margin:30px auto;">
+                <form action="/Arabalar"method="POST">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="marka" id="" placeholder="marka">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="model" id="" placeholder="model">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="yakit" id="" placeholder="yakit">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="resim" id="" placeholder="Resim url">
+                    </div>
+                    <div class="form-group">
+                        <button class ="btn btn-primary btn-large btn-block" href="/">Ekle</button>
+                    </div>
+                </form>
+        </div>      
+    </div>
+</div>
+<%include partials/footer%>

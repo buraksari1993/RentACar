@@ -1,0 +1,24 @@
+<%include partials/header%>
+
+<div class="container">
+    <header class="jumbotron">
+        <h1>Kiralık Arabalar</h1>
+        <p>En lüks ve en uygun arabalar</p>
+    </header>
+    <div class="row">
+            <% Arabalar.forEach(function(araba){%>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail"> 
+                            <img src="<%= araba.resim %>" alt="">
+                            <div class="caption text-center">
+                                    <h3><%= araba.marka %></h3>
+                                    <p><a href="/Arabalar/<%= araba._id %>" class="btn btn-primary">Daha Fazla Bilgi</a></p>
+                            </div>
+                    </div>
+                    
+                    
+                </div>
+            <%}); %>
+    </div>
+        <%include partials/footer%>
+</div>
