@@ -2,6 +2,7 @@ var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    methodOverride = require('method-override'),
     User = require("./models/User"),
     Car = require("./models/Car"),
     passport = require('passport'),
@@ -11,6 +12,7 @@ var express = require("express"),
 mongoose.connect("mongodb://localhost/RentACar");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(methodOverride('_method'));
 
 app.use(require("express-session")({
     secret: "bu bi session uygulaması",
@@ -37,11 +39,12 @@ app.get("/", function (req, res) {
     Araba.find({}, function (err, arabalarDB) {
         if (err) {
             console.log(err);
-        } else {
+        } else {  
             res.render("Anasayfa", { Arabalar: arabalarDB });
         }
     });
 });
+
 app.get("/Kaydol", function (req, res) {
     res.render("Kaydol");
 });
@@ -91,7 +94,6 @@ app.post("/Arabalar", function (req, res) {
             res.redirect("/");
         }
     });
-
 });
 //*******NEW ROUTE
 app.get("/Arabalar/ArabaEkle",kullanıcıGirisi, function (req, res) {
@@ -107,7 +109,16 @@ app.get("/Arabalar/:id",kullanıcıGirisi, function (req, res) {
         }
     });
 });
-
+app.delete("/Arabalar/:id",kullanıcıGirisi,function(req,res){
+    Araba.findByIdAndRemove(req.params.id,function(err){
+        if(err){
+            console.log(err);
+            res.redirect("/");
+        }else{
+            res.redirect("/");
+        }
+    });
+});
 function kullanıcıGirisi(req,res,next){
     if(req.isAuthenticated()){
         return next();

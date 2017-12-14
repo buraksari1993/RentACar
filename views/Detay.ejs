@@ -5,6 +5,11 @@
     <h3>Model - <%= araba.model %></h3>    
     <p>Yakıt Türü - <%= araba.yakıt %></p>
     <a href="/gizli">Rezervasyon</a>
+    <form action="/Arabalar/<%= araba._id %>?_method=DELETE" method="POST">       
+    <%if(currentUser){%>
+        <button class="btn btn-danger">SİL</button>
+    <%}%>
+    </form>
 </div>
 
 <%include partials/footer%>

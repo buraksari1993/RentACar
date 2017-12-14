@@ -3,7 +3,12 @@
 <div class="container">
     <header class="jumbotron">
         <h1>Kiralık Arabalar</h1>
-        <p>En lüks ve en uygun arabalar</p>
+        <p>En lüks ve en uygun arabalar</p>       
+        <%if(currentUser){%>
+            
+        <a href="/Arabalar/ArabaEkle">ArabaEkle</a>    
+        
+        <%}%>
     </header>
     <div class="row">
             <% Arabalar.forEach(function(araba){%>
@@ -20,5 +25,6 @@
                 </div>
             <%}); %>
     </div>
-        <%include partials/footer%>
+        
 </div>
+<%include partials/footer%>
