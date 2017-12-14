@@ -24,29 +24,12 @@ passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//bütün route lar ile paylaşılan bilgiler
+app.use(function(req,res,next){
+    res.locals.currentUser=req.user;
+    next();
+})
 
-// Araba.create({
-//     marka:"bmw",
-//     model:"m3",
-//     yakıt:"benzin",
-//     resim:"https://cdn.pixabay.com/photo/2015/09/02/12/25/bmw-918407__340.jpg"
-// },function(err,arabaDB){
-//     if(err){
-//         console.log("wrong");
-//     }else{
-//         console.log("yeni araba ekleme oldu");
-//         console.log(arabaDB);
-//     }
-// });
-
-// Araba.find({},function(err,arabaDB){
-//     if(err){
-//         console.log("wrong");
-//     }else{
-//         console.log("arabalar");
-//         console.log(arabaDB);
-//     }
-// });
 //*******GET ROUTE
 var Araba = mongoose.model("Car");
 app.get("/", function (req, res) {
@@ -63,17 +46,32 @@ app.get("/Kaydol", function (req, res) {
     res.render("Kaydol");
 });
 app.post("/Kaydol", function (req, res) {
-    var yeniKullanici = new User({name: req.body.name,surname: req.body.surname,username: req.body.username});
+    var yeniKullanici = new User({ name: req.body.name, surname: req.body.surname, username: req.body.username });
     User.register(yeniKullanici, req.body.password, function (err, kullanici) {
         if (err) {
-            console.log("hata ne"+err);
+            console.log("hata ne" + err);
             return res.render("Kaydol");
         }
         passport.authenticate("local")(req, res, function () {
-            res.redirect("/gizli");
+            res.redirect("/");
         });
     });
 });
+app.get("/Giris", function (req, res) {
+    res.render("Giris");
+});
+app.post("/Giris", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/Giris",
+}),
+    function (req, res) {
+    });
+
+app.get("/Cikis", function (req, res) {
+    req.logout();
+    res.redirect("/");
+})
+
 app.get("/gizli", function (req, res) {
     res.render("gizli");
 });
@@ -96,11 +94,11 @@ app.post("/Arabalar", function (req, res) {
 
 });
 //*******NEW ROUTE
-app.get("/Arabalar/ArabaEkle", function (req, res) {
+app.get("/Arabalar/ArabaEkle",kullanıcıGirisi, function (req, res) {
     res.render("ArabaEkle");
 });
 
-app.get("/Arabalar/:id", function (req, res) {
+app.get("/Arabalar/:id",kullanıcıGirisi, function (req, res) {
     Araba.findById(req.params.id, function (err, bulunanAraba) {
         if (err) {
             console.log(err);
@@ -109,6 +107,13 @@ app.get("/Arabalar/:id", function (req, res) {
         }
     });
 });
+
+function kullanıcıGirisi(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/Giris");
+}
 
 var server = app.listen(3000, function () {
     console.log("Sunucu Portu : %d", server.address().port);
